@@ -1,0 +1,50 @@
+server:
+  port: 80 #为了以后访问项目不用写端口号
+  context-path: / #为了以后访问项目不用写项目名
+
+spring:
+  #datasource
+  datasource:
+    druid:
+      username: root
+      password: 123
+      url: jdbc:mysql://120.79.197.130:3307/app?useSSL=true&verifyServerCertificate=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall,log4j
+      filter:
+        stat:
+          merge-sql: true
+          slow-sql-millis: 5000
+      time-between-eviction-runs-millis: 5000
+
+#mybatis-plus
+mybatis-plus:
+  #xml
+  mapper-locations: classpath:/com/cun/app/mapper/*Mapper.xml
+  #bean
+  typeAliasesPackage: com.cun.app.entity
+  global-config:
+    # 3:"UUID";
+    id-type: 3
+    field-strategy: 2
+    db-column-underline: true
+    key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #JdbcTypeForNull
+    jdbc-type-for-null: 'null'
